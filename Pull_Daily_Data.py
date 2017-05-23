@@ -47,7 +47,8 @@ for i in gdxj_ticker:
 
 TESTDATA=stio(myfile)
 
-daily_prices = pd.read_csv(TESTDATA, sep=",")
+daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Days Low','Days High','Open','Previous Close','Volume','Name','Ticker'])
+
 
 #add a time stamp to the file name
 year = datetime.date.today().year
@@ -58,9 +59,13 @@ name='daily_prices'
 end='.csv'
 fix=name+stamp+end
 
+#Add the join key so it can be joined back to the holdings file
+holdings_ticker=df[['VG Ticker','Ticker']]
+outputfile=pd.merge(daily_prices, holdings_ticker, how='left', left_on=['Ticker'], right_on=['Ticker'])
+
 #Put the dataset back into storage
 bucket2 = client.get_bucket('gdxjtrade')
-df_out = pd.DataFrame(daily_prices)
+df_out = pd.DataFrame(outputfile)
 df_out.to_csv(fix, index=False)
 blob2 = bucket2.blob(fix)
 blob2.upload_from_filename(fix)
