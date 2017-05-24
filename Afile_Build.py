@@ -75,6 +75,12 @@ outputfile.fillna(0)
 #Percentage of Shares
 outputfile['Shares']=pd.to_numeric(outputfile['Shares'], errors='coerce') #the coerce creates 0's for broken values (i.e. NaN)
 outputfile['share per']=outputfile['Shares']/outputfile['Float Shares']
+outputfile['asset ch']=outputfile['% of Net Assets']-outputfile['New Value']
+outputfile['asset per ch']=outputfile['asset ch']-outputfile['% of Net Assets']
+outputfile['float ch']=outputfile['share per']*outputfile['asset per ch']
+outputfile['share sell']=outputfile['float ch']*outputfile['Float Shares']
+
+
 file1 = outputfile.sort(['Ticker_y','Date'], ascending=True)
 file1['Shares_ch']=file1['Shares'].shift(1)
 
