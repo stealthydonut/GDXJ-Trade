@@ -43,4 +43,19 @@ inMemoryFile.seek(0)
 #The low memory false exists because there was a lot of data
 pricechanges=pd.read_csv(inMemoryFile, low_memory=False)
 
+###############################
+#Merge files by date and ticker
+###############################
+outputfile=pd.merge(pricechanges, holdings, how='right', left_on=['VG Ticker','date'], right_on=['Ticker','Date'])
 
+######################
+#Begin to do Analytics
+######################
+
+#Percentage of Shares
+outputfile['Shares']=outputfile['Shares'].astype(float)
+
+downdayanalysisall['first_ma150rank']=downdayanalysisall['first_ma150rank'].astype(str)
+outputfile['share per']=outputfile['Shares']/outputfile['Float Shares']
+
+outputfile[['Shares','Float Shares']] = outputfile[['Shares','Float Shares']].apply(pd.to_numeric)
