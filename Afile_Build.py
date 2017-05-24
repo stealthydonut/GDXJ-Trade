@@ -52,10 +52,7 @@ outputfile=pd.merge(pricechanges, holdings, how='right', left_on=['VG Ticker','d
 #Begin to do Analytics
 ######################
 
+outputfile.fillna(0)
 #Percentage of Shares
-outputfile['Shares']=outputfile['Shares'].astype(float)
-
-downdayanalysisall['first_ma150rank']=downdayanalysisall['first_ma150rank'].astype(str)
+outputfile['Shares']=pd.to_numeric(outputfile['Shares'], errors='coerce') #the coerce creates 0's for broken values (i.e. NaN)
 outputfile['share per']=outputfile['Shares']/outputfile['Float Shares']
-
-outputfile[['Shares','Float Shares']] = outputfile[['Shares','Float Shares']].apply(pd.to_numeric)
