@@ -56,3 +56,11 @@ outputfile.fillna(0)
 #Percentage of Shares
 outputfile['Shares']=pd.to_numeric(outputfile['Shares'], errors='coerce') #the coerce creates 0's for broken values (i.e. NaN)
 outputfile['share per']=outputfile['Shares']/outputfile['Float Shares']
+file1 = outputfile.sort(['Ticker_y','Date'], ascending=True)
+file1['Shares_ch']=file1['Shares'].shift(1)
+
+bucket2 = client.get_bucket('gdxjtrade')
+df_out = pd.DataFrame(file1)
+df_out.to_csv('gdxj_afile.csv', index=False)
+blob2 = bucket2.blob('gdxj_afile.csv')
+blob2.upload_from_filename('gdxj_afile.csv')
