@@ -67,7 +67,7 @@ fix=name+stamp+end
 holdings_ticker=df[['VG Ticker','Ticker']]
 holdings_ticker.loc['Ticker'].map(lambda x: x.strip())
 daily_prices.loc['Ticker'].map(lambda x: x.strip())
-outputfile=pd.merge(daily_prices, holdings_ticker, how='left', left_on=['join2'], right_on=['join1'])
+outputfile=pd.merge(daily_prices, holdings_ticker, how='left', left_on=['Ticker'], right_on=['Ticker'])
 
 #Put the dataset back into storage
 bucket2 = client.get_bucket('gdxjtrade')
