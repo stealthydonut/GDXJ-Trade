@@ -65,8 +65,8 @@ fix=name+stamp+end
 
 #Add the join key so it can be joined back to the holdings file
 holdings_ticker=df[['VG Ticker','Ticker']]
-holdings_ticker['join1'] = holdings_ticker['Ticker'].map(lambda x: x.strip())
-daily_prices['join2'] = daily_prices['Ticker'].map(lambda x: x.strip())
+holdings_ticker.loc['Ticker'].map(lambda x: x.strip())
+daily_prices.loc['Ticker'].map(lambda x: x.strip())
 outputfile=pd.merge(daily_prices, holdings_ticker, how='left', left_on=['join2'], right_on=['join1'])
 
 #Put the dataset back into storage
