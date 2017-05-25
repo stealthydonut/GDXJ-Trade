@@ -46,7 +46,9 @@ for i in gdxj_ticker:
         myfile += f.readline()
     except:
         print i
-        
+     
+
+    
 TESTDATA=stio(myfile)
 
 daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Days Low','Days High','Open','Previous Close','Volume','Name','Ticker'])
