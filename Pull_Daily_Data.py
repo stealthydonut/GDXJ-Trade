@@ -64,9 +64,9 @@ end='.csv'
 fix=name+stamp+end
 
 #Add the join key so it can be joined back to the holdings file
+#loc has to be on the original dataframe and not the reference dataframe because the reference points back to the original
+df['Ticker'] = df.loc[df['Ticker'].index, 'Ticker'].map(lambda x: x.strip())
 holdings_ticker=df[['VG Ticker','Ticker']]
-holdings_ticker.loc[holdings_ticker['Ticker'].index,'Ticker'].map(lambda x: x.strip())
-daily_prices.loc[daily_prices['Ticker'].index,'Ticker'].map(lambda x: x.strip())
 outputfile=pd.merge(daily_prices, holdings_ticker, how='left', left_on=['Ticker'], right_on=['Ticker'])
 
 #Put the dataset back into storage
