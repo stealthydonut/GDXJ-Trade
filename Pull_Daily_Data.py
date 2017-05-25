@@ -65,9 +65,9 @@ fix=name+stamp+end
 
 #Add the join key so it can be joined back to the holdings file
 holdings_ticker=df[['VG Ticker','Ticker']]
-holdings_ticker['Ticker'] = holdings_ticker['Ticker'].map(lambda x: x.strip())
-daily_prices['Ticker'] = daily_prices['Ticker'].map(lambda x: x.strip())
-outputfile=pd.merge(daily_prices, holdings_ticker, how='left', left_on=['Ticker'], right_on=['Ticker'])
+holdings_ticker['join1'] = holdings_ticker['Ticker'].map(lambda x: x.strip())
+daily_prices['join2'] = daily_prices['Ticker'].map(lambda x: x.strip())
+outputfile=pd.merge(daily_prices, holdings_ticker, how='left', left_on=['join2'], right_on=['join1'])
 
 #Put the dataset back into storage
 bucket2 = client.get_bucket('gdxjtrade')
