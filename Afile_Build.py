@@ -93,7 +93,7 @@ outputfile['float ch']=outputfile['share per']*outputfile['asset per ch']
 outputfile['share sell']=outputfile['float ch']*outputfile['Float Shares']
 
 
-file1 = outputfile.sort(['Ticker_y','Date'], ascending=True)
+file1 = outputfile.sort(['Ticker','Date'], ascending=True)
 file1['Shares_ch']=file1['Shares'].shift(1)
 
 bucket2 = client.get_bucket('gdxjtrade')
