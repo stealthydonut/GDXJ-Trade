@@ -95,6 +95,7 @@ outputfile['share sell']=outputfile['float ch']*outputfile['Float Shares']
 
 file1 = outputfile.sort(['Ticker','Date'], ascending=True)
 file1['Shares_ch']=file1['Shares'].shift(1)
+file1['Share Change']=file1['Shares']-file1['Shares_ch']
 
 bucket2 = client.get_bucket('gdxjtrade')
 df_out = pd.DataFrame(file1)
