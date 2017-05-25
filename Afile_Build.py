@@ -1,6 +1,7 @@
 import pandas as pd
 import StringIO
 import datetime
+import numpy as np
 import sys
 if sys.version_info[0] < 3: 
     from StringIO import StringIO as stio
