@@ -33,7 +33,7 @@ from google.cloud import storage
 client = storage.Client()
 bucket = client.get_bucket('gdxjtrade')
 # Then do other things...
-blob = bucket.get_blob('GDX_HOLDINGS.csv')
+blob = bucket.get_blob('gdxj_holding.csv')
 content = blob.download_as_string()
 #Because the pandas dataframe can only read from buffers or files, we need to take the string and put it into a buffer
 inMemoryFile = StringIO.StringIO()
