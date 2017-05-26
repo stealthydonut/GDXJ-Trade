@@ -99,10 +99,10 @@ outputfile=pd.merge(out1, holdings, how='right', left_on=['VG Ticker','date'], r
 outputfile.fillna(0)
 #Percentage of Shares
 outputfile['Shares']=pd.to_numeric(outputfile['Shares'], errors='coerce') #the coerce creates 0's for broken values (i.e. NaN)
-outputfile['Per net assets']=pd.to_numeric(outputfile['Per net assets'], errors='coerce') 
+outputfile['Net Asset Per']=pd.to_numeric(outputfile['Net Asset Per'], errors='coerce') 
 outputfile['share per']=outputfile['Shares']/outputfile['Float Shares']
-outputfile['asset ch']=outputfile['Per net assets']-outputfile['New Value']
-outputfile['asset per ch']=outputfile['asset ch']/outputfile['Per net assets']
+outputfile['asset ch']=outputfile['Net Asset Per']-outputfile['New Value']
+outputfile['asset per ch']=outputfile['asset ch']/outputfile['Net Asset Per']
 outputfile['float ch']=outputfile['share per']*outputfile['asset per ch']
 outputfile['share sell']=outputfile['float ch']*outputfile['Float Shares']
 
