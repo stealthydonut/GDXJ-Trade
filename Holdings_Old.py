@@ -77,13 +77,20 @@ blob2.upload_from_filename('gdxj_holding.csv')
 ############################
 #Keep the old holdings file#
 ############################
-#name of file
-stamp2='_'+str(month)+'_'+str(day)+'_'+str(year)
-stampname='GDXJholdings'+stamp2+'.csv'
-
-
 bucket2 = client.get_bucket('gdxjtrade')
 df_out = pd.DataFrame(gdxj_holding)
+df_out.to_csv('gdxj_holding.csv', index=False)
+blob2 = bucket2.blob('gdxj_holding.csv')
+blob2.upload_from_filename('gdxj_holding.csv')
+
+############################
+#Keep the old holdings file#
+############################
+#name of file
+stampname='GDXJ'+stamp+'.csv'
+
+
+df_out = pd.DataFrame(holdings)
 df_out.to_csv(stampname, index=False)
 blob2 = bucket2.blob(stampname)
 blob2.upload_from_filename(stampname)
