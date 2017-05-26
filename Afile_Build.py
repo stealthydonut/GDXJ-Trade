@@ -72,8 +72,20 @@ inMemoryFile.seek(0)
 #Note - anytime you read from a buffer you need to seek so it starts at the beginning
 #The low memory false exists because there was a lot of data
 pricechanges2=pd.read_csv(inMemoryFile, low_memory=False)
-pricechanges = pricechanges1.append(pricechanges2, ignore_index=True)
+blob = bucket.get_blob('daily_prices2017_5_25.csv')
+content = blob.download_as_string()
+#Because the pandas dataframe can only read from buffers or files, we need to take the string and put it into a buffer
+inMemoryFile = StringIO.StringIO()
+inMemoryFile.write(content)
+#When you buffer, the "cursor" is at the end, and when you read it, the starting position is at the end and it will not pick up anything
+inMemoryFile.seek(0)
+#Note - anytime you read from a buffer you need to seek so it starts at the beginning
+#The low memory false exists because there was a lot of data
+pricechanges3=pd.read_csv(inMemoryFile, low_memory=False)
 
+
+pricechangesx = pricechanges1.append(pricechanges2, ignore_index=True)
+pricechanges = pricechangesx.append(pricechanges3, ignore_index=True)
 ###############################
 #Merge files by date and ticker
 ###############################
@@ -88,8 +100,8 @@ outputfile.fillna(0)
 #Percentage of Shares
 outputfile['Shares']=pd.to_numeric(outputfile['Shares'], errors='coerce') #the coerce creates 0's for broken values (i.e. NaN)
 outputfile['share per']=outputfile['Shares']/outputfile['Float Shares']
-outputfile['asset ch']=outputfile['% of Net Assets']-outputfile['New Value']
-outputfile['asset per ch']=outputfile['asset ch']/outputfile['% of Net Assets']
+outputfile['asset ch']=outputfile['Per net assets']-outputfile['New Value']
+outputfile['asset per ch']=outputfile['asset ch']/outputfile['Per net assets']
 outputfile['float ch']=outputfile['share per']*outputfile['asset per ch']
 outputfile['share sell']=outputfile['float ch']*outputfile['Float Shares']
 
