@@ -78,6 +78,7 @@ blob2.upload_from_filename('gdxj_holding.csv')
 #Keep the old holdings file#
 ############################
 #name of file
+stamp2='-'+str(month)+'_'+str(day)+'_'+str(year)
 stampname='GDXJ'+stamp+'.csv'
 
 
