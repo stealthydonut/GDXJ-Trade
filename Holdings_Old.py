@@ -87,7 +87,7 @@ blob2.upload_from_filename('gdxj_holding.csv')
 #Keep the old holdings file#
 ############################
 #name of file
-stampname='GDXJ'+stamp+'.csv'
+stampname='GDXJ_Historic.csv'
 
 
 df_out = pd.DataFrame(holdings)
