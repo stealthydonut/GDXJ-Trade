@@ -79,7 +79,7 @@ blob2.upload_from_filename('gdxj_holding.csv')
 ############################
 #name of file
 stamp2='_'+str(month)+'_'+str(day)+'_'+str(year)
-stampname='GDXJ'+stamp2+'.csv'
+stampname='GDXJholdings'+stamp2+'.csv'
 
 
 bucket2 = client.get_bucket('gdxjtrade')
