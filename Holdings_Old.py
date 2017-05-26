@@ -81,7 +81,8 @@ blob2.upload_from_filename('gdxj_holding.csv')
 stampname='GDXJ'+stamp+'.csv'
 
 
-df_out = pd.DataFrame(holdings)
+bucket2 = client.get_bucket('gdxjtrade')
+df_out = pd.DataFrame(gdxj_holding)
 df_out.to_csv(stampname, index=False)
 blob2 = bucket2.blob(stampname)
 blob2.upload_from_filename(stampname)
