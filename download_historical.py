@@ -54,7 +54,7 @@ for i in gdxj_ticker:
 
 #Merge the file ticker file back into the output file
 ticker=df[['VG Ticker','Google_Ticker']]
-outputfile=pd.merge(bigdata, ticker, how='left', left_on=['Google_Ticker'], right_on=['Google_Ticker'])      
+outputfile=pd.merge(bigdata, ticker, how='left', left_on=['ticker'], right_on=['Google_Ticker'])      
         
 #Put the dataset back into storage
 bucket2 = client.get_bucket('gdxjtrade')
