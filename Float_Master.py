@@ -1,3 +1,5 @@
+import StringIO
+import pandas as pd
 ############################
 #Get the daily price changes
 ############################
