@@ -83,6 +83,7 @@ pricechanges=pd.read_csv(inMemoryFile, low_memory=False)
 pricechanges['date']=pd.to_datetime(pricechanges['Date'], errors='coerce')
 
 
+
 ###############################
 #Merge files by date and ticker
 ###############################
@@ -106,7 +107,7 @@ outputfile['float ch']=outputfile['share per']*outputfile['asset per ch']
 outputfile['share sell']=outputfile['float ch']*outputfile['Float Shares']
 
 
-file1 = outputfile.sort(['Ticker','Date'], ascending=True)
+file1 = outputfile.sort(['Ticker','date_x'], ascending=True)
 file1['Shares_ch']=file1['Shares'].shift(1)
 file1['Share Change']=file1['Shares']-file1['Shares_ch']
 
