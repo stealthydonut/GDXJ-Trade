@@ -69,9 +69,7 @@ daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Shor
 
 #Add the join key so it can be joined back to the holdings file
 #loc has to be on the original dataframe and not the reference dataframe because the reference points back to the original
-df['Ticker'] = df.loc[df['Ticker'].index, 'Ticker'].map(lambda x: x.strip())
-holdings_ticker=df[['VG Ticker','Ticker']]
-outputfile=pd.merge(daily_prices, holdings_ticker, how='left', left_on=['Ticker'], right_on=['Ticker'])
+
 #Set the existing data on to the new file
 from google.cloud import storage
 client = storage.Client()
@@ -88,8 +86,13 @@ inMemoryFile.seek(0)
 #The low memory false exists because there was a lot of data
 float_all=pd.read_csv(inMemoryFile, low_memory=False)
 
-
 bigdata = float_all.append(outputfile, ignore_index=True)
+
+#Add the join key so it can be joined back to the holdings file
+#loc has to be on the original dataframe and not the reference dataframe because the reference points back to the original
+df['Ticker'] = df.loc[df['Ticker'].index, 'Ticker'].map(lambda x: x.strip())
+holdings_ticker=df[['VG Ticker','Ticker']]
+outputfile=pd.merge(bigdata, holdings_ticker, how='left', left_on=['Ticker'], right_on=['Ticker'])
 
 
 #Put the dataset back into storage
