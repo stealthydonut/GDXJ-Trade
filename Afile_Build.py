@@ -51,7 +51,7 @@ from google.cloud import storage
 client = storage.Client()
 bucket = client.get_bucket('gdxjtrade')
 # Then do other things...
-blob = bucket.get_blob('daily_prices2017_5_23.csv')
+blob = bucket.get_blob('all_float_gold.csv')
 content = blob.download_as_string()
 #Because the pandas dataframe can only read from buffers or files, we need to take the string and put it into a buffer
 inMemoryFile = StringIO.StringIO()
@@ -60,36 +60,14 @@ inMemoryFile.write(content)
 inMemoryFile.seek(0)
 #Note - anytime you read from a buffer you need to seek so it starts at the beginning
 #The low memory false exists because there was a lot of data
-pricechanges1=pd.read_csv(inMemoryFile, low_memory=False)
-# Then do other things...
-blob = bucket.get_blob('daily_prices2017_5_24.csv')
-content = blob.download_as_string()
-#Because the pandas dataframe can only read from buffers or files, we need to take the string and put it into a buffer
-inMemoryFile = StringIO.StringIO()
-inMemoryFile.write(content)
-#When you buffer, the "cursor" is at the end, and when you read it, the starting position is at the end and it will not pick up anything
-inMemoryFile.seek(0)
-#Note - anytime you read from a buffer you need to seek so it starts at the beginning
-#The low memory false exists because there was a lot of data
-pricechanges2=pd.read_csv(inMemoryFile, low_memory=False)
-blob = bucket.get_blob('daily_prices2017_5_25.csv')
-content = blob.download_as_string()
-#Because the pandas dataframe can only read from buffers or files, we need to take the string and put it into a buffer
-inMemoryFile = StringIO.StringIO()
-inMemoryFile.write(content)
-#When you buffer, the "cursor" is at the end, and when you read it, the starting position is at the end and it will not pick up anything
-inMemoryFile.seek(0)
-#Note - anytime you read from a buffer you need to seek so it starts at the beginning
-#The low memory false exists because there was a lot of data
-pricechanges3=pd.read_csv(inMemoryFile, low_memory=False)
+df=pd.read_csv(inMemoryFile, low_memory=False)
+floatchanges=df[['Ticker','VG Ticker','Float Shares','Short Ratio','date']]
 
 
-pricechangesx = pricechanges1.append(pricechanges2, ignore_index=True)
-pricechanges = pricechangesx.append(pricechanges3, ignore_index=True)
 ###############################
 #Merge files by date and ticker
 ###############################
-out1=pd.merge(pricechanges, ticker, how='left', left_on=['VG Ticker'], right_on=['VG Ticker'])
+out1=pd.merge(floatchanges, ticker, how='left', left_on=['VG Ticker'], right_on=['VG Ticker'])
 outputfile=pd.merge(out1, holdings, how='right', left_on=['VG Ticker','date'], right_on=['Ticker','Date'])
 
 ######################
