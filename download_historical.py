@@ -16,36 +16,23 @@ day = datetime.date.today().day
 month = datetime.datetime.now()
 month2=month.strftime('%B')
 myfile = ''
-for i in gdxj_ticker:
-    try:#Develop the text string that can get all the data
-      stringone='https://www.google.com/finance/historical?output=csv&q='
-      ticker='MSFT'
-      startdate='&startdate=May+22%2C+2015'
-      enddate='&enddate='+str(month2)+'+'+str(day)+'%2C+'+str(year)
-      text2=stringone+ticker+startdate+enddate      
-      df = pd.read_csv(text2)
-
-
-
-#https://www.google.com/finance/historical?output=csv&q=AAPL&startdate=May+22%2C+2015&enddate=May+21%2C+2017
-#https://www.google.com/finance/historical?output=csv&q=mbo&startdate=May+22%2C+201&enddate=May+29%2C+2017
-#stringone='https://www.google.com/finance/historical?output=csv&q='
-#ticker='MBO'
-#startdate='&startdate=May+22%2C+2015'
-#enddate='&enddate='+str(month2)+'+'+str(day)+'%2C+'+str(year)
-#text2=stringone+ticker+startdate+enddate
+bigdata = pd.DataFrame()
 
 for i in gdxj_ticker:
     try:#Develop the text string that can get all the data
-      stringone='https://www.google.com/finance/historical?output=csv&q='
-      ticker='MSFT'
-      startdate='&startdate=May+22%2C+2015'
-      enddate='&enddate='+str(month2)+'+'+str(day)+'%2C+'+str(year)
-      text2=stringone+ticker+startdate+enddate      
-      link=text2
-      f = urllib.urlopen(link)
-      myfile += f.readline()     
+        stringone='https://www.google.com/finance/historical?output=csv&q='
+        ticker='MSFT'
+        startdate='&startdate=May+22%2C+2015'
+        enddate='&enddate='+str(month2)+'+'+str(day)+'%2C+'+str(year)
+        text2=stringone+ticker+startdate+enddate      
+        data = pd.read_csv(text2)
+        data['close_lag1']=data['Close'].shift(1)
+        data['changepos']=np.where(data['Close']>data['close_lag1'], 1, 0)
+        data['changeneg']=np.where(data['Close']<data['close_lag1'], 1, 0)
+        data['changenone']=np.where(data['Close']==data['close_lag1'], 1, 0)
+        bigdata = bigdata.append(data, ignore_index=False)
     except:
-      print i
-     
-TESTDATA=stio(myfile)
+        print 
+
+
+
