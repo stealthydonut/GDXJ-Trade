@@ -94,7 +94,7 @@ bigdata = float_all.append(outputfile, ignore_index=True)
 
 #Put the dataset back into storage
 bucket2 = client.get_bucket('gdxjtrade')
-df_out = pd.DataFrame(outputfile)
-df_out.to_csv(fix, index=False)
-blob2 = bucket2.blob(fix)
-blob2.upload_from_filename(fix)
+df_out = pd.DataFrame(bigdata)
+df_out.to_csv('all_float_gold.csv', index=False)
+blob2 = bucket2.blob('all_float_gold.csv')
+blob2.upload_from_filename('all_float_gold.csv')
