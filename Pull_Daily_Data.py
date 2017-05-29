@@ -86,7 +86,7 @@ inMemoryFile.seek(0)
 #The low memory false exists because there was a lot of data
 float_all=pd.read_csv(inMemoryFile, low_memory=False)
 
-bigdata = float_all.append(outputfile, ignore_index=True)
+bigdata = float_all.append(daily_prices, ignore_index=True)
 
 #Add the join key so it can be joined back to the holdings file
 #loc has to be on the original dataframe and not the reference dataframe because the reference points back to the original
@@ -94,10 +94,12 @@ df['Ticker'] = df.loc[df['Ticker'].index, 'Ticker'].map(lambda x: x.strip())
 holdings_ticker=df[['VG Ticker','Ticker']]
 outputfile=pd.merge(bigdata, holdings_ticker, how='left', left_on=['Ticker'], right_on=['Ticker'])
 
+outputfile2=outputfile[['VG Ticker','Ticker','date','Float Shares','Short Ratio','Name']]
+
 
 #Put the dataset back into storage
 bucket2 = client.get_bucket('gdxjtrade')
-df_out = pd.DataFrame(bigdata)
+df_out = pd.DataFrame(outputfile2)
 df_out.to_csv('all_float_gold.csv', index=False)
 blob2 = bucket2.blob('all_float_gold.csv')
 blob2.upload_from_filename('all_float_gold.csv')
