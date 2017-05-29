@@ -39,7 +39,7 @@ for i in gdxj_ticker:
         #date,Float Shares,Day's Low,Day's High,Open,Previous Close,Change,Volume,Name,Ticker
         #end="&f=d1f6ghopc1vns"
         #date,Float ,Name,Ticker
-        end="&f=d1f6s7ns"
+        end="&f=d1f6s7oc1pghns"
         str1 = ''.join([i])
         text2=start+str1+end    
         #Get the data from the yahoo api
@@ -53,7 +53,7 @@ for i in gdxj_ticker:
     
 TESTDATA=stio(myfile)
 
-daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Short Ratio','Name','Ticker'])
+daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Short Ratio','Open','Change','Previous Close','High','Low','Name','Ticker'])
 
 
 
