@@ -52,6 +52,10 @@ for i in gdxj_ticker:
     except:
         print i
 
+        
+bigdata.columns = [['Date', 'Open','High','Low','Close','Volume', 'ticker']]
+        
+        
 #Merge the file ticker file back into the output file
 ticker=df[['VG Ticker','Google_Ticker']]
 outputfile=pd.merge(bigdata, ticker, how='left', left_on=['ticker'], right_on=['Google_Ticker'])      
