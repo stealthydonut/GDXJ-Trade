@@ -80,13 +80,16 @@ inMemoryFile.seek(0)
 #Note - anytime you read from a buffer you need to seek so it starts at the beginning
 #The low memory false exists because there was a lot of data
 pricechanges=pd.read_csv(inMemoryFile, low_memory=False)
+pricechanges['date']=pd.to_datetime(pricechanges['Date'], errors='coerce')
+
 
 ###############################
 #Merge files by date and ticker
 ###############################
 out1=pd.merge(floatchanges, ticker, how='left', left_on=['VG Ticker_y'], right_on=['VG Ticker'])
 out2=pd.merge(out1, holdings, how='right', left_on=['VG Ticker','date'], right_on=['Ticker','Date'])
-outputfile=pd.merge(pricechanges, out2, how='right', left_on=['VG Ticker','Date'], right_on=['VG Ticker','date'])
+out2['date2']=pd.to_datetime(out2['date'], errors='coerce')
+outputfile=pd.merge(pricechanges, out2, how='right', left_on=['VG Ticker','date'], right_on=['VG Ticker','date2'])
 
 ######################
 #Begin to do Analytics
