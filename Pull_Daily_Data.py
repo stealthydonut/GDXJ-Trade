@@ -39,7 +39,7 @@ for i in gdxj_ticker:
         #date,Float Shares,Day's Low,Day's High,Open,Previous Close,Change,Volume,Name,Ticker
         #end="&f=d1f6ghopc1vns"
         #date,Float ,Name,Ticker
-        end="&f=d1fns"
+        end="&f=d1f6s7ns"
         str1 = ''.join([i])
         text2=start+str1+end    
         #Get the data from the yahoo api
@@ -53,23 +53,44 @@ for i in gdxj_ticker:
     
 TESTDATA=stio(myfile)
 
-daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Name','Ticker'])
+daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Short Ratio','Name','Ticker'])
+
+
 
 
 #add a time stamp to the file name
-year = datetime.date.today().year
-month = datetime.date.today().month
-day = datetime.date.today().day
-stamp=str(year)+'_'+str(month)+'_'+str(day)
-name='daily_prices'
-end='.csv'
-fix=name+stamp+end
+#year = datetime.date.today().year
+#month = datetime.date.today().month
+#day = datetime.date.today().day
+#stamp=str(year)+'_'+str(month)+'_'+str(day)
+#name='daily_prices'
+#end='.csv'
+#fix=name+stamp+end
 
 #Add the join key so it can be joined back to the holdings file
 #loc has to be on the original dataframe and not the reference dataframe because the reference points back to the original
 df['Ticker'] = df.loc[df['Ticker'].index, 'Ticker'].map(lambda x: x.strip())
 holdings_ticker=df[['VG Ticker','Ticker']]
 outputfile=pd.merge(daily_prices, holdings_ticker, how='left', left_on=['Ticker'], right_on=['Ticker'])
+#Set the existing data on to the new file
+from google.cloud import storage
+client = storage.Client()
+bucket = client.get_bucket('gdxjtrade')
+# Then do other things...
+blob = bucket.get_blob('float_all.csv')
+content = blob.download_as_string()
+#Because the pandas dataframe can only read from buffers or files, we need to take the string and put it into a buffer
+inMemoryFile = StringIO.StringIO()
+inMemoryFile.write(content)
+#When you buffer, the "cursor" is at the end, and when you read it, the starting position is at the end and it will not pick up anything
+inMemoryFile.seek(0)
+#Note - anytime you read from a buffer you need to seek so it starts at the beginning
+#The low memory false exists because there was a lot of data
+float_all=pd.read_csv(inMemoryFile, low_memory=False)
+
+
+bigdata = float_all.append(outputfile, ignore_index=True)
+
 
 #Put the dataset back into storage
 bucket2 = client.get_bucket('gdxjtrade')
