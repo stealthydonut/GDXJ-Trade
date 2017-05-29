@@ -36,8 +36,10 @@ myfile = ''
 for i in gdxj_ticker:
     try:#Develop the text string that can get all the data
         start="http://finance.yahoo.com/d/quotes.csv?s="
-        #date,Float Shares,Day's Low,Day's High,Open,Previous Close,Volume,Name,Ticker
-        end="&f=d1f6ghopc1vns"
+        #date,Float Shares,Day's Low,Day's High,Open,Previous Close,Change,Volume,Name,Ticker
+        #end="&f=d1f6ghopc1vns"
+        #date,Float ,Name,Ticker
+        end="&f=d1fns"
         str1 = ''.join([i])
         text2=start+str1+end    
         #Get the data from the yahoo api
@@ -51,7 +53,7 @@ for i in gdxj_ticker:
     
 TESTDATA=stio(myfile)
 
-daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Days Low','Days High','Open','Previous Close','Change','Volume','Name','Ticker'])
+daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Name','Ticker'])
 
 
 #add a time stamp to the file name
