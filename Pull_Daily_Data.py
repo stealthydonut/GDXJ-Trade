@@ -53,7 +53,7 @@ for i in gdxj_ticker:
     
 TESTDATA=stio(myfile)
 
-daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Short Ratio','Open','Change','Previous Close','High','Low','Name','Ticker'])
+daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Short Ratio','Open','Change','Previous Close','Low','High','Name','Ticker'])
 
 
 
@@ -94,7 +94,7 @@ df['Ticker'] = df.loc[df['Ticker'].index, 'Ticker'].map(lambda x: x.strip())
 holdings_ticker=df[['VG Ticker','Ticker']]
 outputfile=pd.merge(bigdata, holdings_ticker, how='left', left_on=['Ticker'], right_on=['Ticker'])
 
-outputfile2=outputfile[['VG Ticker_y','Ticker','date','Float Shares','Short Ratio','Name']]
+outputfile2=outputfile[['VG Ticker_y','Ticker','date','Float Shares','Short Ratio','Open','Change','Previous Close','Low','High','Name']]
 
 
 #Put the dataset back into storage
