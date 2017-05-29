@@ -52,10 +52,13 @@ for i in gdxj_ticker:
     except:
         print i
 
-
+#Merge the file ticker file back into the output file
+ticker=df[['VG Ticker','Google_Ticker']]
+outputfile=pd.merge(bigdata, ticker, how='left', left_on=['Google_Ticker'], right_on=['Google_Ticker'])      
+        
 #Put the dataset back into storage
 bucket2 = client.get_bucket('gdxjtrade')
-df_out = pd.DataFrame(bigdata)
+df_out = pd.DataFrame(outputfile)
 df_out.to_csv('gdxj_historical.csv', index=False)
 blob2 = bucket2.blob('gdxj_historical.csv')
 blob2.upload_from_filename('gdxj_historical.csv')
