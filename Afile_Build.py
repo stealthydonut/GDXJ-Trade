@@ -44,6 +44,12 @@ inMemoryFile.seek(0)
 #The low memory false exists because there was a lot of data
 holdings=pd.read_csv(inMemoryFile, low_memory=False)
 #holdings.drop_duplicates(cols='Date', take_last=True)
+holdings['del1'] = np.where(holdings['Date']=='5/2017-05-29 12:53:07.004990/2017', 1, 0)
+holdings['del2'] = np.where(holdings['Date']=='5/27/2017', 1, 0)
+holdings['del3'] = np.where(holdings['Date']=='5/30/2017', 1, 0)
+holdings2 = holdings[holdings['del1'] != 1]
+holdings3 = holdings2[holdings2['del2'] != 1]
+holdings4 = holdings3[holdings3['del3'] != 1]
 
 ############################
 #Get the short and float positions
@@ -88,7 +94,7 @@ pricechanges['date']=pd.to_datetime(pricechanges['Date'], errors='coerce')
 #Merge files by date and ticker
 ###############################
 out1=pd.merge(floatchanges, ticker, how='left', left_on=['VG Ticker_y'], right_on=['VG Ticker'])
-out2=pd.merge(out1, holdings, how='right', left_on=['VG Ticker','date'], right_on=['Ticker','Date'])
+out2=pd.merge(out1, holdings4, how='right', left_on=['VG Ticker','date'], right_on=['Ticker','Date'])
 out2['date2']=pd.to_datetime(out2['date'], errors='coerce')
 outputfile=pd.merge(pricechanges, out2, how='right', left_on=['VG Ticker','date'], right_on=['VG Ticker','date2'])
 
