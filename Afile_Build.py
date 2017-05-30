@@ -113,7 +113,7 @@ outputfile['float ch']=outputfile['share per']*outputfile['asset per ch']
 outputfile['share sell']=outputfile['float ch']*outputfile['Float Shares']
 
 
-file1 = outputfile.sort(['Holding Name','date_y'], ascending=True)
+file1 = outputfile.sort(['Holding Name','Date_y'], ascending=True)
 file1['Shares_ch']=file1['Shares'].shift(1)
 file1['Share Change']=file1['Shares']-file1['Shares_ch']
 
