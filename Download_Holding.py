@@ -18,7 +18,7 @@ dls = "https://www.vaneck.com/FundHoldings.aspx?ticker=GDXJ"
 urllib.urlretrieve(dls, "test.xls")
 data = pd.read_html('test.xls', skiprows=2)
 df = data[0]
-df.columns = ['number','Holding Name','Ticker','Shares','Market Value','Per net assets']
+df.columns = ['number','Holding Name','Ticker','Shares','Market Value','Net Asset Per']
 ###############################
 #add a time stamp as a variable
 ###############################
@@ -53,6 +53,8 @@ inMemoryFile.seek(0)
 #Note - anytime you read from a buffer you need to seek so it starts at the beginning
 #The low memory false exists because there was a lot of data
 holdings=pd.read_csv(inMemoryFile, low_memory=False)
+#holdings['del1'] = np.where(holdings['Date']=='5/29/2017', 1, 0)
+#holdings2 = holdings[holdings['del1'] != 1]
 
 ##########################
 #Add the correct variables
@@ -66,7 +68,7 @@ holdings=pd.read_csv(inMemoryFile, low_memory=False)
 ###################################
 #Set the data on top of one another
 ###################################
-gdxj_holding = df.append(holdings, ignore_index=True)
+gdxj_holding = df.append(holdings2, ignore_index=True)
 
 ##################################
 #Export the file to google storage
