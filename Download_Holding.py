@@ -24,7 +24,9 @@ df.columns = ['number','Holding Name','Ticker','Shares','Market Value','Per net 
 ###############################
 year = datetime.date.today().year
 month = datetime.date.today().month
-day = datetime.date.today().day
+from datetime import datetime, timedelta
+day = datetime.today() - timedelta(days=days_to_subtract)
+#day = datetime.date.today().day 
 #day = '25'
 stamp=str(month)+'/'+str(day)+'/'+str(year)
 df['Date']=stamp
