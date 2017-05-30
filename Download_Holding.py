@@ -18,7 +18,11 @@ dls = "https://www.vaneck.com/FundHoldings.aspx?ticker=GDXJ"
 urllib.urlretrieve(dls, "test.xls")
 data = pd.read_html('test.xls', skiprows=2)
 df = data[0]
-df.columns = ['number','Holding Name','Ticker','Shares','Market Value','Net Asset Per']
+df.columns = ['number','Holding Name','Ticker','Shares','Market Value2','NAP']
+
+#loc has to be on the original dataframe and not the reference dataframe because the reference points back to the original
+df['Net Asset Per'] = df.loc[df['NAP'].index, 'NAP'].map(lambda x: x.replace('%',''))
+df['Market Value'] = df.loc[df['Market Value2'].index, 'Market Value2'].map(lambda x: x.replace('$','').replace(',',''))
 ###############################
 #add a time stamp as a variable
 ###############################
@@ -68,7 +72,7 @@ holdings=pd.read_csv(inMemoryFile, low_memory=False)
 ###################################
 #Set the data on top of one another
 ###################################
-gdxj_holding = df.append(holdings2, ignore_index=True)
+gdxj_holding = df.append(holdings, ignore_index=True)
 
 ##################################
 #Export the file to google storage
