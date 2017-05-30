@@ -96,7 +96,9 @@ pricechanges['date']=pd.to_datetime(pricechanges['Date'], errors='coerce')
 out1=pd.merge(floatchanges, ticker, how='left', left_on=['VG Ticker_y'], right_on=['VG Ticker'])
 out2=pd.merge(out1, holdings4, how='right', left_on=['VG Ticker','date'], right_on=['Ticker','Date'])
 out2['date2']=pd.to_datetime(out2['Date'], errors='coerce')
-outputfile=pd.merge(pricechanges, out2, how='right', left_on=['VG Ticker','date'], right_on=['Ticker','date2'])
+#out2['VG Ticker_y'] = out2.loc[out2['VG Ticker_y'].index, 'VG Ticker_y'].map(lambda x: x.strip())
+pricechanges['VG Ticker'] = pricechanges.loc[pricechanges['VG Ticker'].index, 'VG Ticker'].map(lambda x: x.strip())
+outputfile=pd.merge(pricechanges, out2, how='right', left_on=['VG Ticker','date'], right_on=['VG Ticker','date2'])
 
 ######################
 #Begin to do Analytics
