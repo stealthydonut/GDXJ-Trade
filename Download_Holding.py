@@ -22,10 +22,14 @@ df.columns = ['number','Holding Name','Ticker','Shares','Market Value','Per net 
 ###############################
 #add a time stamp as a variable
 ###############################
-year = datetime.date.today().year
-month = datetime.date.today().month
 from datetime import datetime, timedelta
-day = datetime.today() - timedelta(days=1)
+timevalue = datetime.today() - timedelta(days=1)
+day = timevalue.day
+month = timevalue.month
+year = timevalue.year
+#year = datetime.date.today().year
+#month = datetime.date.today().month
+day = timevalue.day
 #day = datetime.date.today().day 
 #day = '25'
 stamp=str(month)+'/'+str(day)+'/'+str(year)
