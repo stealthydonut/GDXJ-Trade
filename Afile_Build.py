@@ -121,6 +121,20 @@ file1 = outputfile.sort(['Holding Name','Date_y'], ascending=True)
 file1['Shares_ch']=file1['Shares'].shift(1)
 file1['Share Change']=file1['Shares']-file1['Shares_ch']
 
+#Begin to delete columns
+file1.__delitem__('del1')
+file1.__delitem__('del2')
+file1.__delitem__('del3')
+file1.__delitem__('date2')
+file1.__delitem__('Per net assets')
+file1.__delitem__('NAP')
+file1.__delitem__('Market Value2')
+file1.__delitem__('Ticker_y')
+file1.__delitem__('Name_y')
+file1.__delitem__('Google_Ticker')
+file1.__delitem__('Name_x')
+
+
 bucket2 = client.get_bucket('gdxjtrade')
 df_out = pd.DataFrame(file1)
 df_out.to_csv('gdxj_afile.csv', index=False)
