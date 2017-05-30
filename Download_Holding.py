@@ -39,7 +39,8 @@ day = timevalue.day
 stamp=str(month)+'/'+str(day)+'/'+str(year)
 df['Date']=stamp
 df.__delitem__('number')
-
+df.__delitem__('Market Value2')
+df.__delitem__('NAP')
 ####################################
 #Get the daily holdings form storage
 ####################################
