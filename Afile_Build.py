@@ -131,7 +131,7 @@ file1.__delitem__('NAP')
 file1.__delitem__('Market Value2')
 file1.__delitem__('Ticker_y')
 file1.__delitem__('Name_y')
-file1.__delitem__('Google_Ticker')
+#file1.__delitem__('Google_Ticker')
 file1.__delitem__('Name_x')
 
 
