@@ -122,9 +122,9 @@ file1['Shares_ch']=file1['Shares'].shift(1)
 file1['Share Change']=file1['Shares']-file1['Shares_ch']
 
 #Begin to delete columns
-file1.__delitem__('del1')
-file1.__delitem__('del2')
-file1.__delitem__('del3')
+#file1.__delitem__('del1')
+#file1.__delitem__('del2')
+#file1.__delitem__('del3')
 file1.__delitem__('date2')
 file1.__delitem__('Per net assets')
 file1.__delitem__('NAP')
