@@ -126,7 +126,7 @@ file1['Share Change']=file1['Shares']-file1['Shares_ch']
 #file1.__delitem__('del2')
 #file1.__delitem__('del3')
 file1.__delitem__('date2')
-file1.__delitem__('Per net assets')
+#file1.__delitem__('Per net assets')
 file1.__delitem__('NAP')
 file1.__delitem__('Market Value2')
 file1.__delitem__('Ticker_y')
