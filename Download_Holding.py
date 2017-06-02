@@ -38,6 +38,19 @@ day = timevalue.day
 #day = '25'
 stamp=str(month)+'/'+str(day)+'/'+str(year)
 df['Date']=stamp
+
+#Generate an insert date
+year = datetime.today().year
+month = datetime.today().month
+day = datetime.today().day 
+
+insert=str(month)+'/'+str(day)+'/'+str(year)
+
+df['insert date'] = insert
+
+
+
+
 df.__delitem__('number')
 df.__delitem__('Market Value2')
 df.__delitem__('NAP')
