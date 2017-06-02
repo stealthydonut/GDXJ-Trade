@@ -72,10 +72,10 @@ daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Shor
 
 #Set the existing data on to the new file
 from google.cloud import storage
-client = storage.Client()
+#client = storage.Client()
 bucket = client.get_bucket('gdxjtrade')
 # Then do other things...
-blob = bucket.get_blob('float_all.csv')
+blob = bucket.get_blob('all_float_gold.csv')
 content = blob.download_as_string()
 #Because the pandas dataframe can only read from buffers or files, we need to take the string and put it into a buffer
 inMemoryFile = StringIO.StringIO()
@@ -103,3 +103,6 @@ df_out = pd.DataFrame(outputfile2)
 df_out.to_csv('all_float_gold.csv', index=False)
 blob2 = bucket2.blob('all_float_gold.csv')
 blob2.upload_from_filename('all_float_gold.csv')
+
+
+
