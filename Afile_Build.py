@@ -93,8 +93,8 @@ pricechanges['date']=pd.to_datetime(pricechanges['Date'], errors='coerce')
 ###############################
 #Merge files by date and ticker
 ###############################
-floatchanges['VG Ticker_y'] = floatchanges.loc[floatchanges['VG Ticker_y'].index, 'VG Ticker_y'].map(lambda x: x.strip())
-out1=pd.merge(floatchanges, ticker, how='left', left_on=['VG Ticker_y'], right_on=['VG Ticker'])
+floatchanges['VG Ticker'] = floatchanges.loc[floatchanges['VG Ticker'].index, 'VG Ticker'].map(lambda x: x.strip())
+out1=pd.merge(floatchanges, ticker, how='left', left_on=['VG Ticker'], right_on=['VG Ticker'])
 out2=pd.merge(out1, holdings, how='right', left_on=['VG Ticker','date'], right_on=['Ticker','Date'])
 out2['date2']=pd.to_datetime(out2['Date'], errors='coerce')
 #out2['VG Ticker_y'] = out2.loc[out2['VG Ticker_y'].index, 'VG Ticker_y'].map(lambda x: x.strip())
