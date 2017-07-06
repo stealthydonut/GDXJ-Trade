@@ -57,9 +57,12 @@ daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Shor
 daily_prices['Mkt Cap']=daily_prices['Previous Close']*daily_prices['Float Shares']
 
 outputfile=pd.merge(daily_prices, details, how='left', left_on=['Ticker'], right_on=['Ticker'])
-
-outputfile['Cons Bottom Diff']=(outputfile['Previous Close']-outputfile['Cons Bottom'])/outputfile['Previous Close']
-outputfile['Cons Top Diff']=(outputfile['Previous Close']-outputfile['Cons Top'])/outputfile['Previous Close']
+outputfile['Cons Bottom'] = outputfile['Cons Bottom'].str.replace('$', '')
+outputfile['Cons Bottom1'] = outputfile['Cons Bottom'].astype(float)
+outputfile['Cons Top'] = outputfile['Cons Top'].str.replace('$', '')
+outputfile['Cons Top1'] = outputfile['Cons Top'].astype(float)
+outputfile['Cons Bottom Diff']=(outputfile['Previous Close']-outputfile['Cons Bottom1'])/outputfile['Previous Close']
+outputfile['Cons Top Diff']=(outputfile['Previous Close']-outputfile['Cons Top1'])/outputfile['Previous Close']
 
 
 #Put the dataset back into storage
