@@ -48,7 +48,8 @@ for i in gdxj_ticker:
         myfile += f.readline()
     except:
         print i
-        
+    
+    
         
 TESTDATA=stio(myfile)
 
