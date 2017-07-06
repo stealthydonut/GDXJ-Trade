@@ -53,8 +53,13 @@ for i in gdxj_ticker:
 TESTDATA=stio(myfile)
 
 daily_prices = pd.read_csv(TESTDATA, sep=",", names=['date','Float Shares','Short Ratio','Open','Change','Previous Close','Low','High','Name','Ticker','52 Low','52 High','Dividend','Per change 52 H','Per change 52 L','PE Ratio','Volume'])
+daily_prices['Mkt Cap']=daily_prices['Previous Close']*daily_prices['Float Shares']
 
 outputfile=pd.merge(daily_prices, details, how='left', left_on=['Ticker'], right_on=['Ticker'])
+
+outputfile['Cons Bottom Diff']=(outputfile['Previous Close']-outputfile['Cons Bottom'])/outputfile['Previous Close']
+outputfile['Cons Top Diff']=(outputfile['Previous Close']-outputfile['Cons Top'])/outputfile['Previous Close']
+
 
 #Put the dataset back into storage
 from google.cloud import storage
@@ -64,5 +69,3 @@ df_out = pd.DataFrame(outputfile)
 df_out.to_csv('high_low_GDXJ.csv', index=False)
 blob2 = bucket2.blob('high_low_GDXJ.csv')
 blob2.upload_from_filename('high_low_GDXJ.csv')
-
-        
